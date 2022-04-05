@@ -36,16 +36,22 @@
             android:layout_toStartOf="@+id/ButtonBuy">
 
             <TextView
+                android:id="@+id/txtName_A"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{product.name_a}"
                 android:textSize="20dp" />
 
             <TextView
+                android:id="@+id/txtPrice_A"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{String.valueOf(product.price_a)+'S'}" />
-
+            <TextView
+                android:id="@+id/txtAvailable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{product.available_a ? 'Availible' : 'Out of S'}"/>
 
         </LinearLayout>
 
