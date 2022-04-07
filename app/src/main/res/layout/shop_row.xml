@@ -24,7 +24,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/play_a" />
+            android:productImage_V="@{product.image_url_a}"/>
 
         <LinearLayout
             android:id="@+id/LL_A"
@@ -46,12 +46,12 @@
                 android:id="@+id/txtPrice_A"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(product.price_a)+'S'}" />
+                android:text="@{String.valueOf(product.price_a)+`$`}" />
             <TextView
                 android:id="@+id/txtAvailable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{product.available_a ? 'Availible' : 'Out of S'}"/>
+                android:text="@{product.available_a ? `Available`: `Out of Stock`}"/>
 
         </LinearLayout>
 
@@ -65,8 +65,8 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
+            android:enabled="@{product.available_a}"
             android:text="Buy" />
-
 
     </RelativeLayout>
 </layout>

@@ -1,7 +1,12 @@
 package com.example.shopingprojecta.models;
 
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
+import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.DiffUtil;
+
+import com.bumptech.glide.Glide;
 
 import java.util.Objects;
 
@@ -11,15 +16,23 @@ public class Product {
     private String name_a;
     private Double price_a;
     private boolean isAvailable_a;
-    private String image_url_a;
+    private int image_url_a;
 
-    public Product(String id_a, String name_a, Double price_a, boolean isAvailable_a, String image_url_a) {
+    public Product(String id_a, String name_a, Double price_a, boolean isAvailable_a, int image_url_a) {
         this.id_a = id_a;
         this.name_a = name_a;
         this.price_a = price_a;
         this.isAvailable_a = isAvailable_a;
         this.image_url_a = image_url_a;
     }
+
+    //    public Product(String id_a, String name_a, Double price_a, boolean isAvailable_a, String image_url_a) {
+//        this.id_a = id_a;
+//        this.name_a = name_a;
+//        this.price_a = price_a;
+//        this.isAvailable_a = isAvailable_a;
+//        this.image_url_a;
+//    }
 
     public String getId_a() {
         return id_a;
@@ -53,11 +66,11 @@ public class Product {
         isAvailable_a = available_a;
     }
 
-    public String getImage_url_a() {
+    public int getImage_url_a() {
         return image_url_a;
     }
 
-    public void setImage_url_a(String image_url_a) {
+    public void setImage_url_a(int image_url_a) {
         this.image_url_a = image_url_a;
     }
 
@@ -68,7 +81,7 @@ public class Product {
                 ", name_a='" + name_a + '\'' +
                 ", price_a=" + price_a +
                 ", isAvailable_a=" + isAvailable_a +
-                ", image_url_a='" + image_url_a + '\'' +
+                ", image_url_a=" + image_url_a +
                 '}';
     }
 
@@ -78,10 +91,10 @@ public class Product {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
         return isAvailable_a() == product.isAvailable_a() &&
+                getImage_url_a() == product.getImage_url_a() &&
                 getId_a().equals(product.getId_a()) &&
                 getName_a().equals(product.getName_a()) &&
-                getPrice_a().equals(product.getPrice_a()) &&
-                getImage_url_a().equals(product.getImage_url_a());
+                getPrice_a().equals(product.getPrice_a());
     }
 
     public static DiffUtil.ItemCallback<Product>itemCallback=new DiffUtil.ItemCallback<Product>() {
@@ -93,6 +106,18 @@ public class Product {
         @Override
         public boolean areContentsTheSame(@NonNull Product oldItem, @NonNull Product newItem) {
             return oldItem.equals(newItem);
+
+
+
         }
     };
+
+
+    @BindingAdapter("android:productImage_V")
+    public static void loadImgV(ImageView imageView, int image_url_a){
+
+        Glide.with(imageView).load(image_url_a).fitCenter().into(imageView);
+
+    }
+
 }
