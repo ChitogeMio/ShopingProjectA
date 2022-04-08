@@ -7,6 +7,9 @@
         <variable
             name="product"
             type="com.example.shopingprojecta.models.Product" />
+        <variable
+            name="shopInterface"
+            type="com.example.shopingprojecta.adepter.ShopListAdapter.ShopInterface"/>
         
     </data>
 
@@ -14,7 +17,9 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_margin="5dp">
+        android:layout_margin="5dp"
+        android:background="?attr/selectableItemBackground"
+        android:onClick="@{()->shopInterface.onItemClick(product)}">
 
         <ImageView
             android:id="@+id/Image_V"
@@ -66,6 +71,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:enabled="@{product.available_a}"
+            android:onClick="@{()->shopInterface.addItem(product)}"
             android:text="Buy" />
 
     </RelativeLayout>

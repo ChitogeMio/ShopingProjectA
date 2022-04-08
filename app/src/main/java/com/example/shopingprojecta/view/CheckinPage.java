@@ -97,7 +97,7 @@ public class CheckinPage extends AppCompatActivity {
 
                     @Override
                     public void onFinish() {
-                        if (flgBeacon){
+                        if (flgBeacon==false){
                             Intent intent = new Intent(CheckinPage.this,MainActivity.class);
                             startActivity(intent);
                             Toast.makeText(CheckinPage.this,"Thanh Cong",Toast.LENGTH_SHORT).show();

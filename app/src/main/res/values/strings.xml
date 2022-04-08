@@ -30,4 +30,17 @@
     <string name="localeAccessErrorTitle">Lỗi thông tin vị trí</string>
     <string name="localeAccessErrorMessage">Cài đặt thông tin vị trí đang TẮT. Kiểm tra cài đặt thông tin vị trí và thử lại.</string>
 
+    <string-array name="quantity_string_array">
+
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5(Max)</item>
+
+
+
+    </string-array>
+
+
 </resources>

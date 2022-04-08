@@ -14,8 +14,11 @@ import com.example.shopingprojecta.models.Product;
 
 public class ShopListAdapter extends ListAdapter<Product, ShopListAdapter.ShopViewHolder> {
 
-    public ShopListAdapter() {
+    ShopInterface shopInterface;
+    public ShopListAdapter(ShopInterface shopInterface) {
+
         super(Product.itemCallback);
+        this.shopInterface = shopInterface;
     }
 
     @NonNull
@@ -24,6 +27,7 @@ public class ShopListAdapter extends ListAdapter<Product, ShopListAdapter.ShopVi
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ShopRowBinding shopRowBinding = ShopRowBinding.inflate(layoutInflater,parent,false);
+        shopRowBinding.setShopInterface(shopInterface);
 
         return new ShopViewHolder(shopRowBinding);
     }
@@ -33,6 +37,7 @@ public class ShopListAdapter extends ListAdapter<Product, ShopListAdapter.ShopVi
 
         Product product = getItem(position);
         holder.shopRowBinding.setProduct(product);
+        holder.shopRowBinding.executePendingBindings();
 
     }
 
@@ -43,6 +48,9 @@ public class ShopListAdapter extends ListAdapter<Product, ShopListAdapter.ShopVi
         public ShopViewHolder(ShopRowBinding binding) {
             super(binding.getRoot());
             this.shopRowBinding=binding;
+
+
+
         }
     }
 

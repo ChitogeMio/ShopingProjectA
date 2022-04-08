@@ -1,55 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.ProduceDetailFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="shopViewModel"
+            type="com.example.shopingprojecta.viewmodels.ShopViewModel" />
+
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp">
+        tools:context=".view.ProduceDetailFragment">
 
-        <ImageView
-            android:id="@+id/produceImageView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:src="@drawable/item"
-            android:scaleType="center"/>
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-        <TextView
-            android:id="@+id/txtName_B"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ech"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Available/Out of Stock"
-            android:layout_gravity="center"/>
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp"/>
-        <TextView
-            android:id="@+id/textName_C"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
-            />
-        <Button
-            android:id="@+id/ButtonBuy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Buy"
+            <ImageView
+                android:id="@+id/produceImageView"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:src="@drawable/item"
+                android:scaleType="center"
+                android:productImage_V="@{shopViewModel.product.image_url_a}"/>
 
-            android:enabled="true"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-            />
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{String.valueOf(shopViewModel.product.price_a)+`$`}"/>
 
-</ScrollView>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/txtName_B"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{shopViewModel.product.name_a}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{shopViewModel.product.available_a?`Available`:`Out of Stock`}"
+                android:layout_gravity="center" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/textName_C"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN" />
+
+            <Button
+                android:id="@+id/ButtonBuy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Buy"
+
+                android:enabled="@{shopViewModel.product.available_a}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:onClick="@{()->shopViewModel.addItemtoCart(shopViewModel.product)}"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>
