@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.shopingprojecta.R;
 import com.example.shopingprojecta.models.CartItem;
@@ -61,6 +63,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.menu_main,menu);
+
+        MenuItem menuItem = menu.findItem(R.id.cartFragment);
+        View actionView = menuItem.getActionView();
+
+        TextView cartBadgeTextView = actionView.findViewById(R.id.card_badge_text_view);
+
+        cartBadgeTextView.setText("2");
+
         return true;
 
     }
