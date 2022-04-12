@@ -32,7 +32,6 @@ public class ProduceDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         fragmentProduceDetailBinding = FragmentProduceDetailBinding.inflate(inflater,container,false);
 
-
         return fragmentProduceDetailBinding.getRoot();
     }
 

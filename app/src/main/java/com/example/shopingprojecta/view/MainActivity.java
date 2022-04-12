@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
     ShopViewModel shopViewModel;
 
+    private int cartQuantily = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<CartItem> cartItems) {
                 Log.d(TAG, "onChanged:"+cartItems.size());
+                int quantily=0;
+                for (CartItem cartItem:cartItems){
+
+                    quantily+=cartItem.getQuantity();
+
+                }
+                cartQuantily = quantily;
+                invalidateOptionsMenu();
+
             }
         });
 
@@ -69,7 +80,15 @@ public class MainActivity extends AppCompatActivity {
 
         TextView cartBadgeTextView = actionView.findViewById(R.id.card_badge_text_view);
 
-        cartBadgeTextView.setText("2");
+        cartBadgeTextView.setText(String.valueOf(cartQuantily));
+
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onOptionsItemSelected(menuItem);
+
+            }
+        });
 
         return true;
 

@@ -72,7 +72,7 @@
             android:layout_marginBottom="5dp"
             android:enabled="@{product.available_a}"
             android:onClick="@{()->shopInterface.addItem(product)}"
-            android:text="Buy" />
+            android:text="ADD" />
 
     </RelativeLayout>
 </layout>
