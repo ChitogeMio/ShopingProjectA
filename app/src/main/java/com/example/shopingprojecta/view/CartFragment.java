@@ -8,8 +8,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +26,12 @@ import com.example.shopingprojecta.viewmodels.ShopViewModel;
 
 import java.util.List;
 
-public class CartFragment extends Fragment {
+public class CartFragment extends Fragment implements CartListAdapter.CartInterface {
 
     private static final String TAG = "CartFragment";
     ShopViewModel shopViewModel;
     FragmentCartBinding fragmentCartBinding;
+    NavController navController;
 
     public CartFragment() {
         // Required empty public constructor
@@ -46,7 +50,9 @@ public class CartFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        CartListAdapter cartListAdapter= new CartListAdapter();
+        navController = Navigation.findNavController(view);
+
+        CartListAdapter cartListAdapter= new CartListAdapter(this);
 
         fragmentCartBinding.cartRCV.setAdapter(cartListAdapter);
         fragmentCartBinding.cartRCV.addItemDecoration(new DividerItemDecoration(requireContext(),DividerItemDecoration.VERTICAL));
@@ -58,8 +64,41 @@ public class CartFragment extends Fragment {
 
                 cartListAdapter.submitList(cartItems);
 
+                fragmentCartBinding.buttonBuy.setEnabled(cartItems.size()>0);
+
             }
         });
+
+        shopViewModel.getTotalPrice().observe(getViewLifecycleOwner(), new Observer<Double>() {
+            @Override
+            public void onChanged(Double aDouble) {
+                fragmentCartBinding.orderTotalTextView.setText("Total:($)"+aDouble.toString());
+            }
+        });
+
+        fragmentCartBinding.buttonBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                navController.navigate(R.id.action_cartFragment_to_otherFragment);
+
+            }
+        });
+
+    }
+
+    @Override
+    public void deleteItem(CartItem cartItem) {
+
+        Log.d(TAG, "deleteItem: "+cartItem.getProduct().getName_a());
+        shopViewModel.removeItemFromCart(cartItem);
+
+    }
+
+    @Override
+    public void changeQuatily(CartItem cartItem, int quantily) {
+
+        shopViewModel.changeQuantily(cartItem,quantily);
 
     }
 }

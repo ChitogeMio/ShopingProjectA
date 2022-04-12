@@ -22,7 +22,11 @@
         <entry key="..\:/Users/SONTIEN/AndroidStudioProjects/ShopingProjectA/app/src/main/res/menu/main_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/SONTIEN/AndroidStudioProjects/ShopingProjectA/app/src/main/res/menu/main_menuu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/SONTIEN/AndroidStudioProjects/ShopingProjectA/app/src/main/res/menu/menu_main.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/SONTIEN/AndroidStudioProjects/ShopingProjectACC/app/src/main/res/layout/cart_row.xml" value="0.5" />
+        <entry key="..\:/Users/SONTIEN/AndroidStudioProjects/ShopingProjectACC/app/src/main/res/drawable/badge_shape.xml" value="0.143" />
+        <entry key="..\:/Users/SONTIEN/AndroidStudioProjects/ShopingProjectACC/app/src/main/res/layout/cart_action_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/SONTIEN/AndroidStudioProjects/ShopingProjectACC/app/src/main/res/layout/cart_row.xml" value="0.4444444444444444" />
+        <entry key="..\:/Users/SONTIEN/AndroidStudioProjects/ShopingProjectACC/app/src/main/res/layout/fragment_cart.xml" value="0.33" />
+        <entry key="..\:/Users/SONTIEN/AndroidStudioProjects/ShopingProjectACC/app/src/main/res/layout/fragment_other.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>
