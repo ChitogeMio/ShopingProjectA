@@ -25,6 +25,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShopingProjectA">
         <activity
+            android:name=".login.RegistrationPage"
+            android:exported="false" />
+        <activity
+            android:name=".login.LoginPage"
+            android:exported="false" />
+        <activity
             android:name=".view.CheckinPage"
             android:exported="false" />
         <activity

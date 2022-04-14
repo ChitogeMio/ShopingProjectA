@@ -31,7 +31,7 @@ public class IntroPage extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(IntroPage.this,CheckinPage.class);
+                Intent intent = new Intent(IntroPage.this,LoginPage.class);
                 startActivity(intent);
                 finish();
             }

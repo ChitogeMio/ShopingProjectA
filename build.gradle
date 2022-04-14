@@ -3,12 +3,14 @@ buildscript {
     ext.realm_version = '10.9.0'
 
     repositories {
+        google()
         jcenter()
         mavenCentral()
     }
 
     dependencies {
         classpath "io.realm:realm-gradle-plugin:$realm_version"
+        classpath 'com.google.gms:google-services:4.3.10'
     }
 }
 
