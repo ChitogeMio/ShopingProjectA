@@ -16,7 +16,7 @@ import com.example.shopingprojecta.view.CheckinPage;
 public class IntroPage extends AppCompatActivity {
 
     TextView txtWell,txtWell2;
-    private static int Splash_time=5000;
+    private static int Splash_time=4000;
 
 
     @Override

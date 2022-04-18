@@ -36,6 +36,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.shopingprojecta.R;
+import com.example.shopingprojecta.databinding.ActivityCheckinPageBinding;
 import com.example.shopingprojecta.tagcast.AppInfo;
 import com.example.shopingprojecta.tagcast.ErrorDialogFragment;
 
@@ -66,6 +67,8 @@ public class CheckinPage extends AppCompatActivity {
 
     public int mErrorDialogType = ErrorDialogFragment.TYPE_NO;
 
+    ActivityCheckinPageBinding checkinPageBinding;
+
     Button btkScan;
     ProgressBar progressBar;
     int valuePGB = 0;
@@ -73,17 +76,20 @@ public class CheckinPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_checkin_page);
+        checkinPageBinding = ActivityCheckinPageBinding.inflate(getLayoutInflater());
+        setContentView(checkinPageBinding.getRoot());
+        //setContentView(R.layout.activity_checkin_page);
+
         final Context context = getApplicationContext();
         tgcAdapter= TGCAdapter.getInstance(context);
 
-        btkScan = findViewById(R.id.buttonScan);
         progressBar = findViewById(R.id.progressBarLoading);
 
-        btkScan.setOnClickListener(new View.OnClickListener() {
+        checkinPageBinding.buttonScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                checkinPageBinding.buttonScan.setVisibility(View.GONE);
+                checkinPageBinding.lottieScan.setVisibility(View.VISIBLE);
                 tgcAdapter.setScanInterval(10000);
                 tgcAdapter.startScan();
 
@@ -103,14 +109,16 @@ public class CheckinPage extends AppCompatActivity {
                             Toast.makeText(CheckinPage.this,"Thanh Cong",Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(CheckinPage.this,"CheckLai",Toast.LENGTH_SHORT).show();
+                            checkinPageBinding.buttonScan.setVisibility(View.VISIBLE);
+                            checkinPageBinding.lottieScan.setVisibility(View.GONE);
                         }
 
                     }
                 };countDownTimer.start();
 
-
             }
         });
+
 
         final TGCScanListener mTGCScanListener = new TGCScanListener() {
             @Override

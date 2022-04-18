@@ -10,6 +10,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -91,6 +92,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         return true;
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(MainActivity.this,CheckinPage.class);
+        startActivity(intent);
 
     }
 
