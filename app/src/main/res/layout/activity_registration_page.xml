@@ -10,39 +10,174 @@
         android:id="@+id/lottieAnimationView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="centerCrop"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/backgroundfullscreennight"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="0dp" />
+        app:lottie_rawRes="@raw/backgroundfullscreennight" />
 
     <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationView3"
         android:layout_width="287dp"
-        android:layout_height="293dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/lottieAnimationView2"
+        app:layout_constraintStart_toStartOf="@+id/lottieAnimationView2"
         app:layout_constraintTop_toTopOf="@+id/lottieAnimationView2"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/registrationform" />
 
-    <EditText
-        android:id="@+id/editTextTextPassword2"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="358dp" />
+        android:layout_marginTop="100dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@+id/lottieAnimationView2"
+        app:layout_constraintStart_toStartOf="@+id/lottieAnimationView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
-    <EditText
-        android:id="@+id/editTextTextPersonName2"
-        android:layout_width="wrap_content"
+
+        <EditText
+            android:id="@+id/edtNameUser"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_edittext_common"
+            android:background="@drawable/custom_edit_text_1b"
+            android:ems="10"
+            android:hint="Name"
+            android:minLines="@integer/material_motion_duration_long_2"
+            android:inputType="text"
+            android:textColorHint="#ffff" />
+
+        <Space
+            android:layout_width="@dimen/SpaceRegistrationPage"
+            android:layout_height="@dimen/SpaceRegistrationPage"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edtYODUser"
+                android:background="@drawable/custom_edit_text_1b"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/height_edittext_common"
+                android:hint="YOB"
+                android:minLines="@integer/material_motion_duration_long_2"
+                android:inputType="number"
+                android:textColorHint="#fff"/>
+
+            <Space
+                android:layout_width="@dimen/SpaceRegistrationPage"
+                android:layout_height="@dimen/SpaceRegistrationPage"/>
+
+            <RadioGroup
+                android:id="@+id/radioGroupSex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#B9E8E8"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="@dimen"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioButtonMale"
+                    android:layout_width="@dimen/Radio_Layout_width"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Male" />
+                <Space
+                    android:layout_width="@dimen/SpaceRegistrationPage"
+                    android:layout_height="@dimen/SpaceRegistrationPage"/>
+
+                <RadioButton
+                    android:id="@+id/radioButtonFemale"
+                    android:layout_width="@dimen/Radio_Layout_width"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="female"/>
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="@dimen/SpaceRegistrationPage"
+            android:layout_height="@dimen/SpaceRegistrationPage"/>
+
+        <EditText
+            android:id="@+id/edtAddcessUser"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_edittext_common"
+            android:hint="Address"
+            android:minLines="@integer/material_motion_duration_long_2"
+            android:textColorHint="#ffff"
+            android:background="@drawable/custom_edit_text_1b"/>
+
+        <Space
+            android:layout_width="@dimen/SpaceRegistrationPage"
+            android:layout_height="@dimen/SpaceRegistrationPage"/>
+        <EditText
+            android:id="@+id/edtDKTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_edittext_common"
+            android:background="@drawable/custom_edit_text_1b"
+            android:inputType="textPersonName"
+            android:minLines="@integer/material_motion_duration_long_2"
+            android:hint="Email"
+            android:textColorHint="#ffff"/>
+        <Space
+            android:layout_width="@dimen/SpaceRegistrationPage"
+            android:layout_height="@dimen/SpaceRegistrationPage"/>
+        <EditText
+            android:id="@+id/edtDKPassword"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_edittext_common"
+            android:background="@drawable/custom_edit_text_1b"
+            android:inputType="textPassword"
+            android:minLines="@integer/material_motion_duration_long_2"
+            android:hint="Password"
+            android:textColorHint="#ffff"/>
+        <Space
+            android:layout_width="@dimen/SpaceRegistrationPage"
+            android:layout_height="@dimen/SpaceRegistrationPage"/>
+        <CheckBox
+            android:id="@+id/ckboxXacThuc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your information is correct"
+            android:textColor="#ffff"
+            android:layout_gravity="center"/>
+        <Space
+            android:layout_width="@dimen/SpaceRegistrationPage"
+            android:layout_height="@dimen/SpaceRegistrationPage"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <Button
+                android:id="@+id/buttonDKUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sign Up"
+                android:enabled="false"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="276dp" />
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/beth_ellen"
+        android:text="Registration"
+        android:textColor="#ffff"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/lottieAnimationView2"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
