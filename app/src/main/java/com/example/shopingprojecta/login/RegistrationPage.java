@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -30,7 +31,8 @@ public class RegistrationPage extends AppCompatActivity {
     FirebaseAuth myAuthencation;
     DatabaseReference registrationDatabase;
 
-    User user = new User();
+    private User user = new User();
+
     int time1=0;
 
 
@@ -54,11 +56,16 @@ public class RegistrationPage extends AppCompatActivity {
 
     }
 
+/////////////////////////////////////////////////////////////////
+   //                   Son programming
+/////////////////////////////////////////////////////////////////
 
+    ///// dang tai khoang thong qua firebase///
     private void SignUp(){
 
         String email = registrationPageBinding.edtDKTextEmail.getText().toString();
         String password = registrationPageBinding.edtDKPassword.getText().toString();
+        //String userID;
 
             if (email.isEmpty()||password.isEmpty()){
 
@@ -69,6 +76,8 @@ public class RegistrationPage extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+                           // FirebaseUser userID = myAuthencation.getCurrentUser();
+                            updateDatabaseUser();
                             Toast.makeText(RegistrationPage.this," Sign Up Success ",Toast.LENGTH_SHORT).show();
                         }else {
                             Toast.makeText(RegistrationPage.this," Sign Up Fail ",Toast.LENGTH_SHORT).show();
@@ -76,10 +85,25 @@ public class RegistrationPage extends AppCompatActivity {
                     }
                 });
             }
-
-
     }
 
+    ////// update du lieu len firebase data////
+    private void updateDatabaseUser(){
+
+        FirebaseUser userID = FirebaseAuth.getInstance().getCurrentUser();
+        if (userID != null) {
+            // Name, email address, and profile photo Url
+            user.setNameEmail(userID.getEmail());
+            user.setDisplayNameEmail(userID.getDisplayName());
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getIdToken() instead.
+            user.setUidEmail(userID.getUid());
+        }
+        registrationDatabase.child("UserInfomation").push().setValue(user);
+
+    }
+    //// kiem tra da du thong tin chua ////
     private void checkedbox(){
 
         registrationPageBinding.ckboxXacThuc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -88,7 +112,8 @@ public class RegistrationPage extends AppCompatActivity {
 
                 if(b){
                     getIfomation();
-                    if (user.getNameUser().isEmpty()||user.getDiaChi().isEmpty()||user.getyOfB().isEmpty()||(!registrationPageBinding.radioButtonFemale.isChecked()&&!registrationPageBinding.radioButtonMale.isChecked())){
+                    if (user.getNameUser().isEmpty()|| user.getDiaChi().isEmpty()|| user.getyOfB().isEmpty()||
+                            (!registrationPageBinding.radioButtonFemale.isChecked()&&!registrationPageBinding.radioButtonMale.isChecked())){
 
                         ErrorToast();
                         registrationPageBinding.buttonDKUser.setEnabled(false);
@@ -116,7 +141,7 @@ public class RegistrationPage extends AppCompatActivity {
         });
 
     }
-
+    ///// nhan thong tin tu cac edittext////
     private void getIfomation(){
 
         user.setNameUser(registrationPageBinding.edtNameUser.getText().toString());
@@ -124,8 +149,9 @@ public class RegistrationPage extends AppCompatActivity {
         user.setyOfB(registrationPageBinding.edtYODUser.getText().toString());
         GT();
 
-    }
 
+    }
+    ///// mot so loi khi nhap thieu thong tin////
     private void ErrorToast(){
 
         switch (time1){
@@ -147,7 +173,7 @@ public class RegistrationPage extends AppCompatActivity {
         }
 
     }
-
+    //// GT /////
     private void GT(){
 
         registrationPageBinding.radioGroupSex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
