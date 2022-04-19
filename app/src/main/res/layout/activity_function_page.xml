@@ -6,78 +6,96 @@
     android:layout_height="match_parent"
     tools:context=".view.FunctionPage"
     android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="140dp">
-
-    </LinearLayout>
-
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnimationView4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            app:lottie_rawRes="@raw/mobile_app_background_space"
+            android:scaleType="centerCrop"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="false"/>
+
+        <LinearLayout
+            android:id="@+id/imagesssss"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            tools:layout_editor_absoluteX="true"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/imagesssss">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <Space
-                    android:layout_width="@dimen/SpaceRegistrationPage"
-                    android:layout_height="@dimen/SpaceRegistrationPage"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardViewMap"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="20dp">
+                    android:orientation="horizontal">
+
+                    <Space
+                        android:layout_width="@dimen/SpaceRegistrationPage"
+                        android:layout_height="@dimen/SpaceRegistrationPage" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardViewMap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="20dp">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:layout_weight="1"
+                            android:scaleType="centerCrop"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/texi_car_app_lottie_animation" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Map"
+                            android:textColor="#FFFF"
+                            android:textSize="25dp" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <Space
+                        android:layout_width="@dimen/SpaceRegistrationPage"
+                        android:layout_height="@dimen/SpaceRegistrationPage" />
 
                     <com.airbnb.lottie.LottieAnimationView
                         android:layout_width="match_parent"
                         android:layout_height="140dp"
                         android:layout_weight="1"
-                        app:lottie_rawRes="@raw/texi_car_app_lottie_animation"
-                        app:lottie_autoPlay="true"
-                        app:lottie_loop="true"
-                        android:scaleType="centerCrop"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Map"
-                        android:textSize="25dp"
-                        android:textColor="#FFFF"
-                        android:layout_gravity="center"/>
+                        android:padding="5dp"
+                        app:lottie_rawRes="@raw/scanning_nearby" />
 
-                </androidx.cardview.widget.CardView>
-                <Space
-                    android:layout_width="@dimen/SpaceRegistrationPage"
-                    android:layout_height="@dimen/SpaceRegistrationPage"/>
-                <com.airbnb.lottie.LottieAnimationView
-                    android:layout_width="match_parent"
-                    android:layout_height="140dp"
-                    android:layout_weight="1"
-                    app:lottie_rawRes="@raw/scanning_nearby"
-                    android:padding="5dp"/>
-                <Space
-                    android:layout_width="@dimen/SpaceRegistrationPage"
-                    android:layout_height="@dimen/SpaceRegistrationPage"/>
+                    <Space
+                        android:layout_width="@dimen/SpaceRegistrationPage"
+                        android:layout_height="@dimen/SpaceRegistrationPage" />
+
+
+                </LinearLayout>
 
 
             </LinearLayout>
 
+        </ScrollView>
 
-
-
-
-
-
-        </LinearLayout>
-
-    </ScrollView>
+    </RelativeLayout>
 
 </LinearLayout>

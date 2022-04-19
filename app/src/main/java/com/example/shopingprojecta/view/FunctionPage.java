@@ -23,8 +23,11 @@ public class FunctionPage extends AppCompatActivity {
         functionPageBinding.cardViewMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(FunctionPage.this,CheckinPage.class);
+
+                //// chua chinh sua trang
+                Intent intent = new Intent(FunctionPage.this,MapsActivityPage.class);
                 startActivity(intent);
+
             }
         });
 

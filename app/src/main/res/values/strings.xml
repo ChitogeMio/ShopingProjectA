@@ -40,6 +40,7 @@
 
 
     </string-array>
+    <string name="title_activity_maps_page">MapsActivityPage</string>
 
 
 </resources>
