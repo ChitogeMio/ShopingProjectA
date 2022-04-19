@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.example.shopingprojecta.R;
 import com.example.shopingprojecta.databinding.ActivityLoginPageBinding;
 import com.example.shopingprojecta.view.CheckinPage;
+import com.example.shopingprojecta.view.FunctionPage;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -71,8 +72,8 @@ public class LoginPage extends AppCompatActivity {
 
                 if(task.isSuccessful()){
 
-                    Intent intentCheckPage = new Intent(LoginPage.this, CheckinPage.class);
-                    startActivity(intentCheckPage);
+                    Intent intentFunctionPage = new Intent(LoginPage.this, FunctionPage.class);
+                    startActivity(intentFunctionPage);
 
                 }else {
 
