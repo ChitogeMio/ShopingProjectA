@@ -15,10 +15,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.sql.Time;
+
 public class LoginPage extends AppCompatActivity {
 
     ActivityLoginPageBinding loginPageBinding;
     FirebaseAuth myLGAuthencation;
+
+    int time1=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +41,24 @@ public class LoginPage extends AppCompatActivity {
 
         loginPageBinding.buttonLogin.setOnClickListener(v->{
 
-            SignIN();
+            if (loginPageBinding.edtTextPersonName.getText().toString().isEmpty()||
+                loginPageBinding.edtTextPassword.getText().toString().isEmpty()){
+
+                ErrorToast();
+
+            }else {
+                time1=0;
+                SignIN();
+            }
 
         });
 
 
     }
+
+/////////////////////////////////////////////////////////////////
+    //                   Son programming
+/////////////////////////////////////////////////////////////////
 
     private void SignIN(){
 
@@ -68,4 +84,27 @@ public class LoginPage extends AppCompatActivity {
         });
 
     }
+
+    private void ErrorToast(){
+
+        switch (time1){
+
+            case 0:
+                Toast.makeText(LoginPage.this,"Vui long nhap day du thong tin",Toast.LENGTH_SHORT).show();
+                time1++;
+                break;
+            case 1:
+                Toast.makeText(LoginPage.this,"Vui long nhap day du thong tin!!!!",Toast.LENGTH_SHORT).show();
+                time1++;
+                break;
+            case 2:
+                Toast.makeText(LoginPage.this,"Gian roi do \n Vui long nhap day du thong tin!!!!",Toast.LENGTH_SHORT).show();
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
 }

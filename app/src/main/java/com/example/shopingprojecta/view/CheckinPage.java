@@ -93,11 +93,13 @@ public class CheckinPage extends AppCompatActivity {
                 tgcAdapter.setScanInterval(10000);
                 tgcAdapter.startScan();
 
-                CountDownTimer countDownTimer = new CountDownTimer(10000,1000) {
+                CountDownTimer countDownTimer = new CountDownTimer(10500,1000) {
                     @Override
                     public void onTick(long l) {
                         valuePGB = progressBar.getProgress();
-                        if(valuePGB>=progressBar.getMax()){valuePGB=0;}
+                        if(valuePGB>=progressBar.getMax()){
+                            //valuePGB=0;
+                        }
                         progressBar.setProgress(valuePGB + 10);
                     }
 
@@ -109,6 +111,7 @@ public class CheckinPage extends AppCompatActivity {
                             Toast.makeText(CheckinPage.this,"Thanh Cong",Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(CheckinPage.this,"CheckLai",Toast.LENGTH_SHORT).show();
+                            progressBar.setProgress(0);
                             checkinPageBinding.buttonScan.setVisibility(View.VISIBLE);
                             checkinPageBinding.lottieScan.setVisibility(View.GONE);
                         }
