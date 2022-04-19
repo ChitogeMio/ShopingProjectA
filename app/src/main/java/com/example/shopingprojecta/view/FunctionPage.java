@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.example.shopingprojecta.R;
 import com.example.shopingprojecta.databinding.ActivityFunctionPageBinding;
@@ -20,16 +22,40 @@ public class FunctionPage extends AppCompatActivity {
         setContentView(functionPageBinding.getRoot());
         //setContentView(R.layout.activity_function_page);
 
+        animationQS();
+        Press();
+
+    }
+
+    /////////////////////////////////////////////////////
+        //       son programing
+    ////////////////////////////////////////////////////
+
+    private void animationQS() {
+
+        Animation animation = AnimationUtils.loadAnimation(this,R.anim.apha_animation);
+        functionPageBinding.textQuestion.startAnimation(animation);
+
+    }
+    private void Press(){
+
         functionPageBinding.cardViewMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //// chua chinh sua trang
-                Intent intent = new Intent(FunctionPage.this,MapsActivityPage.class);
-                startActivity(intent);
+                Intent intentMap = new Intent(FunctionPage.this,MapsActivityPage.class);
+                startActivity(intentMap);
 
+            }
+        });
+        functionPageBinding.cartFunctionEat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentEat = new Intent(FunctionPage.this,CheckinPage.class);
+                startActivity(intentEat);
             }
         });
 
     }
+
 }
