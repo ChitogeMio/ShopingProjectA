@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.example.shopingprojecta.R;
@@ -24,6 +26,9 @@ import com.example.shopingprojecta.tagcast.ErrorDialogFragment;
 import com.example.shopingprojecta.tagcast.ErrorDialogWorkPage;
 import com.example.shopingprojecta.view.CheckinPage;
 import com.example.shopingprojecta.view.MainActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -44,6 +49,9 @@ public class WorkPage extends AppCompatActivity {
 
     public TGCAdapter tgcAdapterWkPage;
     ActivityWorkPageBinding workPageBinding;
+
+    FirebaseAuth firebaseAuthWorkPage;
+
 
     private boolean flgBeaconWkPage = false;
     private CountDownTimer countDownTimer;
@@ -73,7 +81,6 @@ public class WorkPage extends AppCompatActivity {
         TagcastAA();
         pressButton();
 
-
     }
 
     ////////////////////////////////////
@@ -88,10 +95,33 @@ public class WorkPage extends AppCompatActivity {
                 tgcAdapterWkPage.setScanInterval(10000);
                 tgcAdapterWkPage.startScan();
 
+                Animation animation = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apha_animation_a);
+                Animation animation1 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apha_animation_b);
+                workPageBinding.lottieScanStar.setVisibility(View.VISIBLE);
+                workPageBinding.lottieScanStar.startAnimation(animation);
+
+                //getUserLogin();
+
+                FirebaseUser userID = FirebaseAuth.getInstance().getCurrentUser();
+
+                if (userID != null) {
+                    for (UserInfo profile : userID.getProviderData()) {
+                        // Id of the provider (ex: google.com)
+                        String providerId = profile.getProviderId();
+                        // UID specific to the provider
+                        String uid = profile.getUid();
+                        // Name, email address, and profile photo Url
+                        String name = profile.getDisplayName();
+                        String email = profile.getEmail();
+                        String emaill = userID.getEmail();
+
+                    }
+                }
 
                 countDownTimer = new CountDownTimer(10500,1000) {
                     @Override
                     public void onTick(long l) {
+
 
                     }
 
@@ -101,8 +131,9 @@ public class WorkPage extends AppCompatActivity {
                             processedTimeNow();
                         }else{
                             Toast.makeText(WorkPage.this,"CheckLai",Toast.LENGTH_SHORT).show();
-
                         }
+                        workPageBinding.lottieScanStar.startAnimation(animation1);
+                        workPageBinding.lottieScanStar.setVisibility(View.GONE);
 
                     }
                 };countDownTimer.start();
@@ -110,8 +141,26 @@ public class WorkPage extends AppCompatActivity {
             }
         });
 
-
     }
+
+//    private  void getUserLogin(){
+//
+//        FirebaseUser userID = FirebaseAuth.getInstance().getCurrentUser();
+//
+//        if (userID != null) {
+//            for (UserInfo profile : userID.getProviderData()) {
+//                // Id of the provider (ex: google.com)
+//                String providerId = profile.getProviderId();
+//                // UID specific to the provider
+//                String uid = profile.getUid();
+//                // Name, email address, and profile photo Url
+//                String name = profile.getDisplayName();
+//                String email = profile.getEmail();
+//
+//            }
+//        }
+//
+//    }
 
     private void TagcastAA(){
 

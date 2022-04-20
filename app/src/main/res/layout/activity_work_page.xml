@@ -10,8 +10,7 @@
         android:id="@+id/linearLayoutWord1"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:orientation="vertical">
-    </LinearLayout>
+        android:orientation="vertical"></LinearLayout>
 
     <ScrollView
         android:layout_below="@+id/linearLayoutWord1"
@@ -57,11 +56,13 @@
                                 android:layout_height="match_parent"
                                 android:src="@android:color/black" />
                             <com.airbnb.lottie.LottieAnimationView
+                                android:id="@+id/lottie_scan_star"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 app:lottie_rawRes="@raw/scanning_nearby"
-                                app:lottie_autoPlay="false"
-                                app:lottie_loop="false"/>
+                                app:lottie_autoPlay="true"
+                                app:lottie_loop="true"
+                                android:visibility="gone"/>
 
 
                         </androidx.cardview.widget.CardView>
@@ -182,7 +183,6 @@
                             </androidx.cardview.widget.CardView>
 
                         </LinearLayout>
-
 
                     </RelativeLayout>
 

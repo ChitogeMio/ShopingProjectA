@@ -15,6 +15,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 
 import java.sql.Time;
 
@@ -66,6 +68,7 @@ public class LoginPage extends AppCompatActivity {
         String email = loginPageBinding.edtTextPersonName.getText().toString();
         String password = loginPageBinding.edtTextPassword.getText().toString();
 
+
         myLGAuthencation.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -74,6 +77,9 @@ public class LoginPage extends AppCompatActivity {
 
                     Intent intentFunctionPage = new Intent(LoginPage.this, FunctionPage.class);
                     startActivity(intentFunctionPage);
+                    //userID.getUid();
+                    getUidUserLogin();
+
 
                 }else {
 
@@ -83,6 +89,25 @@ public class LoginPage extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private  void getUidUserLogin(){
+
+        FirebaseUser userID = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (userID != null) {
+            for (UserInfo profile : userID.getProviderData()) {
+                // Id of the provider (ex: google.com)
+                String providerId = profile.getProviderId();
+                // UID specific to the provider
+                String uid = profile.getUid();
+                // Name, email address, and profile photo Url
+                String name = profile.getDisplayName();
+                String email = profile.getEmail();
+
+            }
+        }
 
     }
 
