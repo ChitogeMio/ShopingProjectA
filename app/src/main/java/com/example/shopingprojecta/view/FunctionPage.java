@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils;
 
 import com.example.shopingprojecta.R;
 import com.example.shopingprojecta.databinding.ActivityFunctionPageBinding;
+import com.example.shopingprojecta.view.workwork.WorkPage;
 
 public class FunctionPage extends AppCompatActivity {
 
@@ -52,6 +53,13 @@ public class FunctionPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentEat = new Intent(FunctionPage.this,CheckinPage.class);
+                startActivity(intentEat);
+            }
+        });
+        functionPageBinding.cvWorld.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentEat = new Intent(FunctionPage.this, WorkPage.class);
                 startActivity(intentEat);
             }
         });
