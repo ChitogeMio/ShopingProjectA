@@ -17,7 +17,7 @@ import com.example.shopingprojecta.R;
 import com.example.shopingprojecta.view.CheckinPage;
 import com.example.shopingprojecta.view.workwork.WorkPage;
 
-public class ErrorDialogFragment extends DialogFragment {
+public class ErrorDialogWorkPage extends DialogFragment {
 
     public static final String KEY_TITLE = "title";
     public static final String KEY_MESSAGE 	= "message";
@@ -28,11 +28,12 @@ public class ErrorDialogFragment extends DialogFragment {
     public static final int TYPE_RETRY = 2;
     public static final int TYPE_UPDATE = 3;
 
-    public static void showDialogFragment (FragmentManager fragmentManager, String tag,Fragment fragment){
+    public static void showDialogFragmentWorkPage (FragmentManager fragmentManager, String tag, Fragment fragment){
 
         if(fragmentManager==null){
             return;
         }
+
 
         FragmentTransaction t = fragmentManager.beginTransaction();
         Fragment prve = fragmentManager.findFragmentByTag(tag);
@@ -43,12 +44,12 @@ public class ErrorDialogFragment extends DialogFragment {
         }
         t.add(fragment,tag);
         t.commitAllowingStateLoss();
+
     }
 
-    //@NonNull
+    @NonNull
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         int dialogFlag = getArguments().getInt(KEY_TYPE);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getArguments().getString(KEY_TITLE));
@@ -73,11 +74,11 @@ public class ErrorDialogFragment extends DialogFragment {
 
                         Activity activity = getActivity();
                         if (activity== null){return;}
-                        CheckinPage checkinPage = (CheckinPage) activity;
-                        checkinPage.mErrorDialogType=TYPE_NO;
+                        WorkPage workPage = (WorkPage) activity;
+                        workPage.mErrorDialogType=TYPE_NO;
                         // bat dau quet
 
-                        checkinPage.tgcAdapter.startScan();
+                        workPage.tgcAdapterWkPage.startScan();
                         onDismiss(dialog);
 
                     }
@@ -89,8 +90,8 @@ public class ErrorDialogFragment extends DialogFragment {
                         if (activity==null){
                             return;
                         }
-                        CheckinPage checkinPage = (CheckinPage) activity;
-                        checkinPage.mErrorDialogType=TYPE_NO;
+                        WorkPage workPage = (WorkPage) activity;
+                        workPage.mErrorDialogType=TYPE_NO;
                         onDismiss(dialog);
                     }
                 });
@@ -102,10 +103,10 @@ public class ErrorDialogFragment extends DialogFragment {
 
                         Activity activity = getActivity();
                         if (activity==null){return;}
-                        CheckinPage checkinPage = (CheckinPage) activity;
-                        checkinPage.mErrorDialogType=TYPE_NO;
+                        WorkPage workPage = (WorkPage) activity;
+                        workPage.mErrorDialogType=TYPE_NO;
                         //thu thap du lieu thu quan ly tagcast
-                        checkinPage.tgcAdapter.prepare();
+                        workPage.tgcAdapterWkPage.prepare();
                         onDismiss(dialog);
                     }
                 });
@@ -115,8 +116,8 @@ public class ErrorDialogFragment extends DialogFragment {
 
                         Activity activity = getActivity();
                         if (activity==null){return;}
-                        CheckinPage checkinPage = (CheckinPage) activity;
-                        checkinPage.mErrorDialogType=TYPE_NO;
+                        WorkPage workPage = (WorkPage) activity;
+                        workPage.mErrorDialogType=TYPE_NO;
                         onDismiss(dialog);
 
                     }
@@ -127,5 +128,7 @@ public class ErrorDialogFragment extends DialogFragment {
         }
 
         return builder.create();
+
+
     }
 }

@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:orientation="vertical">
-
     </LinearLayout>
 
     <ScrollView
@@ -87,6 +86,7 @@
                                 android:layout_height="70dp">
 
                                 <com.airbnb.lottie.LottieAnimationView
+                                    android:id="@+id/buttonStarWord"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:scaleType="centerCrop"
@@ -171,6 +171,7 @@
                                 android:layout_height="70dp">
 
                                 <com.airbnb.lottie.LottieAnimationView
+                                    android:id="@+id/buttonEndWord"
                                     android:layout_width="match_parent"
                                     android:layout_height="67dp"
                                     android:scaleType="centerCrop"
@@ -190,8 +191,6 @@
             </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
-
-
 
     </ScrollView>
 
