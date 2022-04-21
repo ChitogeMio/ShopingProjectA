@@ -31,12 +31,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import jp.tagcast.bleservice.TGCErrorCode;
 import jp.tagcast.bleservice.TGCScanListener;
@@ -47,15 +49,35 @@ import jp.tagcast.helper.TGCAdapter;
 
 public class WorkPage extends AppCompatActivity {
 
-    public TGCAdapter tgcAdapterWkPage;
     ActivityWorkPageBinding workPageBinding;
-
-    FirebaseAuth firebaseAuthWorkPage;
-
-
+    //////////////Tagcast////////////////
+    public TGCAdapter tgcAdapterWkPage;
     private boolean flgBeaconWkPage = false;
-    private CountDownTimer countDownTimer;
+    public int mErrorDialogType = ErrorDialogFragment.TYPE_NO;
 
+    //////////////FireBase///////////////
+    FirebaseAuth firebaseAuthWorkPage;
+    private FirebaseUser userID;
+    // Id of the provider (ex: google.com)
+    private String providerId;
+    // UID specific to the provider
+    private String uid;
+    // Name, email address, and profile photo Url
+    private String name;
+    private String email;
+    private String emaill;
+    //////////////Opject Time/////////////////
+    private Calendar calendar,calendarEnd;
+    private SimpleDateFormat simpleDateFormatTime,simpleDateFormatTime1;
+    private SimpleDateFormat simpleDateFormatDate,simpleDateFormatDate1;
+    private String Time,TimeE;
+    private String date;
+    private Date days;
+    private Date daye;
+    private DateFormat dateFormatStar;
+    private DateFormat dateFormatEnd;
+    private CountDownTimer countDownTimerStar,countDownTimerEnd;
+    /////////////Sound//////////////////
     private SoundPool soundPool;
     private int soundIdButton;
     private int soundIdCheckIn;
@@ -65,7 +87,6 @@ public class WorkPage extends AppCompatActivity {
     private String TCentityNumber, TCid, longmap,latmap, serial;
     private Map<String,String> map;
 
-    public int mErrorDialogType = ErrorDialogFragment.TYPE_NO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,24 +95,68 @@ public class WorkPage extends AppCompatActivity {
         setContentView(workPageBinding.getRoot());
         //setContentView(R.layout.activity_work_page);
 
-
         final Context context = getApplicationContext();
         tgcAdapterWkPage=TGCAdapter.getInstance(context);
 
         TagcastAA();
         pressButton();
 
+
     }
 
     ////////////////////////////////////
       //ctc
     ///////////////////////////////////
+
+    /////////time handling/////////////
+    private void processedTimeNow (){
+
+        calendar = Calendar.getInstance();
+        simpleDateFormatTime = new SimpleDateFormat("HH:mm:ss");
+        simpleDateFormatDate = new SimpleDateFormat("dd/MMM/yyyy");
+        dateFormatStar = simpleDateFormatTime;
+        days = dateFormatStar.getCalendar().getTime(); // time
+        Time = simpleDateFormatTime.format(calendar.getTime());
+        date = simpleDateFormatDate.format(calendar.getTime());
+    }
+
+    private void processedTimeNowEnd(){
+
+        calendarEnd = Calendar.getInstance();
+        simpleDateFormatTime1 = new SimpleDateFormat("HH:mm:ss");
+        simpleDateFormatDate1 = new SimpleDateFormat("dd/MMM/yyyy");
+        dateFormatEnd = simpleDateFormatTime1;
+        daye = dateFormatEnd.getCalendar().getTime();
+        long dift = daye.getTime() - days.getTime();
+        //workPageBinding.txtTimeWork.setText(String.valueOf(dift));
+        long hours = TimeUnit.MILLISECONDS.toHours(dift);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(dift) % 60;
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(dift) % 60;
+        long milliseconds = dift % 1000;
+        TimeE = String.format("%02d:%02d:%02d,%02d", hours, minutes, seconds, milliseconds);
+    }
+    ////////////////////////////////////
+
+    ////////////SetText handling////////
+    private void setTXTStart(){
+
+        workPageBinding.txtNameUser.setText(emaill);
+        workPageBinding.txtTimeStarWork.setText(Time);
+        workPageBinding.txtDayWork.setText(date);
+
+    }
+    private void setTXTEnd(){
+        workPageBinding.txtTimeWork.setText(TimeE);
+    }
+    ////////////////////////////////////
+
+    //////////pressButton handling//////
     private void pressButton(){
 
         workPageBinding.buttonStarWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(WorkPage.this," Dang Check ",Toast.LENGTH_SHORT).show();
+                Toast.makeText(WorkPage.this," Checking ",Toast.LENGTH_SHORT).show();
                 tgcAdapterWkPage.setScanInterval(10000);
                 tgcAdapterWkPage.startScan();
 
@@ -100,68 +165,96 @@ public class WorkPage extends AppCompatActivity {
                 workPageBinding.lottieScanStar.setVisibility(View.VISIBLE);
                 workPageBinding.lottieScanStar.startAnimation(animation);
 
-                //getUserLogin();
-
-                FirebaseUser userID = FirebaseAuth.getInstance().getCurrentUser();
-
-                if (userID != null) {
-                    for (UserInfo profile : userID.getProviderData()) {
-                        // Id of the provider (ex: google.com)
-                        String providerId = profile.getProviderId();
-                        // UID specific to the provider
-                        String uid = profile.getUid();
-                        // Name, email address, and profile photo Url
-                        String name = profile.getDisplayName();
-                        String email = profile.getEmail();
-                        String emaill = userID.getEmail();
-
-                    }
-                }
-
-                countDownTimer = new CountDownTimer(10500,1000) {
+                countDownTimerStar = new CountDownTimer(10500,1000) {
                     @Override
                     public void onTick(long l) {
-
 
                     }
 
                     @Override
                     public void onFinish() {
                         if (flgBeaconWkPage){
+                            Toast.makeText(WorkPage.this,"Check Success",Toast.LENGTH_SHORT).show();
+                            getUserLogin();
                             processedTimeNow();
+                            setTXTStart();
+
                         }else{
-                            Toast.makeText(WorkPage.this,"CheckLai",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(WorkPage.this,"Check Fail",Toast.LENGTH_SHORT).show();
                         }
                         workPageBinding.lottieScanStar.startAnimation(animation1);
                         workPageBinding.lottieScanStar.setVisibility(View.GONE);
 
                     }
-                };countDownTimer.start();
+                };countDownTimerStar.start();
+
+            }
+        });
+
+        workPageBinding.buttonEndWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(WorkPage.this," Checking ",Toast.LENGTH_SHORT).show();
+                tgcAdapterWkPage.setScanInterval(10000);
+                tgcAdapterWkPage.startScan();
+
+                Animation animation2 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apha_animation_a);
+                Animation animation3 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apha_animation_b);
+                workPageBinding.lottieScanEnd.setVisibility(View.VISIBLE);
+                workPageBinding.lottieScanEnd.startAnimation(animation2);
+
+                countDownTimerEnd = new CountDownTimer(10500,1000) {
+                    @Override
+                    public void onTick(long l) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        if (flgBeaconWkPage){
+                            Toast.makeText(WorkPage.this," Check Success ",Toast.LENGTH_SHORT).show();
+                            processedTimeNowEnd();
+                            setTXTEnd();
+
+                        }else{
+                            Toast.makeText(WorkPage.this," Check Fail ",Toast.LENGTH_SHORT).show();
+                        }
+                        workPageBinding.lottieScanEnd.startAnimation(animation3);
+                        workPageBinding.lottieScanEnd.setVisibility(View.GONE);
+
+                    }
+                };countDownTimerEnd.start();
 
             }
         });
 
     }
+    ////////////////////////////////////
 
-//    private  void getUserLogin(){
-//
-//        FirebaseUser userID = FirebaseAuth.getInstance().getCurrentUser();
-//
-//        if (userID != null) {
-//            for (UserInfo profile : userID.getProviderData()) {
-//                // Id of the provider (ex: google.com)
-//                String providerId = profile.getProviderId();
-//                // UID specific to the provider
-//                String uid = profile.getUid();
-//                // Name, email address, and profile photo Url
-//                String name = profile.getDisplayName();
-//                String email = profile.getEmail();
-//
-//            }
-//        }
-//
-//    }
+    /////////getUserLogin handling//////
+    private  void getUserLogin(){
 
+        userID = firebaseAuthWorkPage.getInstance().getCurrentUser();
+
+        if (userID != null) {
+            for (UserInfo profile : userID.getProviderData()) {
+                // Id of the provider (ex: google.com)
+                providerId = profile.getProviderId();
+                // UID specific to the provider
+                uid = profile.getUid();
+                // Name, email address, and profile photo Url
+                name = profile.getDisplayName();
+                email = profile.getEmail();
+                emaill = userID.getEmail(); // read email user now
+
+            }
+        }
+
+    }
+
+
+    ////////////////////////////////////
     private void TagcastAA(){
 
         final TGCScanListener mTGCScanListener = new TGCScanListener() {
@@ -280,19 +373,11 @@ public class WorkPage extends AppCompatActivity {
         tgcAdapterWkPage.setTGCScanListener(mTGCScanListener);
 
     }
+    ////////////////////////////////////
 
-    private void processedTimeNow (){
-
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat simpleDateFormatTime = new SimpleDateFormat("HH:mm:ss");
-        SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat("dd/MMM/yyyy");
-        String Time = simpleDateFormatTime.format(calendar.getTime());
-        String Date = simpleDateFormatDate.format(calendar.getTime());
-
-    }
-    //////////////////////////////////
+    ///////////////////////////////////
         //    hdb
-    //////////////////////////////////
+    ///////////////////////////////////
     @Override
     protected void onResume() {
         super.onResume();
@@ -354,4 +439,84 @@ public class WorkPage extends AppCompatActivity {
         }
 
     }
+    ////////////////////////////////////////////////
+       //// xu lt time ????
+    ///////////////////////////////////////////////
+    public String ConvertDateToReadableDate(String DateTime) {
+        if (DateTime != null) {
+            if (!DateTime.equals("")) {
+                // the input should be in this format 2019-03-08 15:14:29
+                //if not you have to change the pattern in SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+
+                Date newDate;
+                Date currentDate = new java.util.Date();
+                int hour = 0, min = 0, sec = 0;
+                String dayName = "", dayNum = "", monthName = "", year = "";
+                long numOfMilliSecondPassed = 0;
+                float milliSecond = 86400000.0f; // 1 day is 86400000 milliseconds
+                float numOfDayPass;
+
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+                try {
+                    newDate = dateFormat.parse(DateTime); // convert String to date
+                    numOfMilliSecondPassed = currentDate.getTime() - newDate.getTime(); //get the difference in date in millisecond
+
+                    hour = Integer.parseInt((String) android.text.format.DateFormat.format("hh", newDate));
+                    min = Integer.parseInt((String) android.text.format.DateFormat.format("mm", newDate));
+                    sec = Integer.parseInt((String) android.text.format.DateFormat.format("ss", newDate));
+                    dayName = (String) android.text.format.DateFormat.format("EEEE", newDate);
+                    dayNum = (String) android.text.format.DateFormat.format("dd", newDate);
+                    monthName = (String) android.text.format.DateFormat.format("MMM", newDate);
+                    year = (String) android.text.format.DateFormat.format("yyyy", newDate);
+
+                    //ParseException
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                //Convert the milliseconds to days
+                numOfDayPass = (numOfMilliSecondPassed / milliSecond);
+
+
+                if (numOfDayPass < 1) {
+                    return hour + ":" + min + ":" + sec;
+                } else if ((numOfDayPass >= 1) && (numOfDayPass < 7)) {
+                    return dayName + " "+ hour + ":" + min + ":" + sec;
+                } else if ((numOfDayPass >= 7) && (numOfDayPass < 30)) {
+                    int weeks = (int) numOfDayPass / 7;
+
+                    if(weeks > 1) {
+                        return weeks + " weeks ago";
+                    }else{
+                        return weeks + " week ago";
+                    }
+                }else if((numOfDayPass >= 30) && (numOfDayPass < 90) ){
+                    int months = (int) numOfDayPass/30;
+
+                    if(months > 1) {
+                        return months + " months ago";
+                    }else{
+                        return months + " month ago";
+                    }
+                }else if((numOfDayPass >= 360) && (numOfDayPass < 1080) ){
+                    int years = (int) numOfDayPass/360;
+
+                    if(years > 1) {
+                        return years + " years ago";
+                    }else{
+                        return years + " year ago";
+                    }
+                }else{
+                    return dayName + " " + dayNum + " " + monthName + " " + year + " "+
+                            hour + ":" + min + ":" + sec;
+                }
+
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
 }

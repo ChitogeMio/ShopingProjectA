@@ -10,7 +10,90 @@
         android:id="@+id/linearLayoutWord1"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="@dimen/SpaceRegistrationPage"
+            android:layout_height="@dimen/SpaceRegistrationPage" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name: " />
+
+            <TextView
+                android:id="@+id/txtName_User"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="User" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date: " />
+
+            <TextView
+                android:id="@+id/txtDayWork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="User" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time S: " />
+
+            <TextView
+                android:id="@+id/txtTimeStarWork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Time S" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TimeW: " />
+
+            <TextView
+                android:id="@+id/txtTimeWork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Time W" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_below="@+id/linearLayoutWord1"
@@ -143,11 +226,13 @@
                                 android:layout_height="match_parent"
                                 android:src="@android:color/black" />
                             <com.airbnb.lottie.LottieAnimationView
+                                android:id="@+id/lottie_scan_end"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 app:lottie_rawRes="@raw/scanning_nearby"
-                                app:lottie_autoPlay="false"
-                                app:lottie_loop="false"/>
+                                app:lottie_autoPlay="true"
+                                app:lottie_loop="true"
+                                android:visibility="gone"/>
 
 
                         </androidx.cardview.widget.CardView>
