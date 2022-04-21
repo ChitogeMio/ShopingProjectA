@@ -54,6 +54,7 @@ public class WorkPage extends AppCompatActivity {
     public TGCAdapter tgcAdapterWkPage;
     private boolean flgBeaconWkPage = false;
     public int mErrorDialogType = ErrorDialogFragment.TYPE_NO;
+    ////////////////////////////////////
 
     //////////////FireBase///////////////
     FirebaseAuth firebaseAuthWorkPage;
@@ -105,8 +106,8 @@ public class WorkPage extends AppCompatActivity {
     }
 
     ////////////////////////////////////
-      //ctc
-    ///////////////////////////////////
+      ///      person program     ///
+    ////////////////////////////////////
 
     /////////time handling/////////////
     private void processedTimeNow (){
@@ -153,17 +154,33 @@ public class WorkPage extends AppCompatActivity {
     //////////pressButton handling//////
     private void pressButton(){
 
+        pressButtonStart();
+        pressButtonEnd();
+
+    }
+
+    private void pressButtonStart(){
+
         workPageBinding.buttonStarWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(WorkPage.this," Checking ",Toast.LENGTH_SHORT).show();
+                Toast.makeText(WorkPage.this," Checking Start ",Toast.LENGTH_SHORT).show();
+
                 tgcAdapterWkPage.setScanInterval(10000);
                 tgcAdapterWkPage.startScan();
 
                 Animation animation = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apha_animation_a);
                 Animation animation1 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apha_animation_b);
+
+                Animation animation5 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apha_animation_enable_type_a);
+                Animation animation6 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apla_animation_disable_type_a);
+
+                workPageBinding.SSSSSSStarCart.startAnimation(animation6);
+                workPageBinding.SSSSSSStarCart.startAnimation(animation6);
+
                 workPageBinding.lottieScanStar.setVisibility(View.VISIBLE);
                 workPageBinding.lottieScanStar.startAnimation(animation);
+                disableButtonStartEnd();
 
                 countDownTimerStar = new CountDownTimer(10500,1000) {
                     @Override
@@ -174,16 +191,20 @@ public class WorkPage extends AppCompatActivity {
                     @Override
                     public void onFinish() {
                         if (flgBeaconWkPage){
-                            Toast.makeText(WorkPage.this,"Check Success",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(WorkPage.this," Start Check Success ",Toast.LENGTH_SHORT).show();
                             getUserLogin();
                             processedTimeNow();
                             setTXTStart();
 
                         }else{
-                            Toast.makeText(WorkPage.this,"Check Fail",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(WorkPage.this," Start Check Fail",Toast.LENGTH_SHORT).show();
                         }
+
+                        workPageBinding.SSSSSSStarCart.startAnimation(animation5);
+                        workPageBinding.EEEEEECart.startAnimation(animation5);
                         workPageBinding.lottieScanStar.startAnimation(animation1);
                         workPageBinding.lottieScanStar.setVisibility(View.GONE);
+                        enableButtonStartEnd();
 
                     }
                 };countDownTimerStar.start();
@@ -191,18 +212,30 @@ public class WorkPage extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void pressButtonEnd(){
         workPageBinding.buttonEndWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(WorkPage.this," Checking ",Toast.LENGTH_SHORT).show();
+                Toast.makeText(WorkPage.this," Checking End ",Toast.LENGTH_SHORT).show();
                 tgcAdapterWkPage.setScanInterval(10000);
                 tgcAdapterWkPage.startScan();
 
                 Animation animation2 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apha_animation_a);
                 Animation animation3 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apha_animation_b);
+
+
+                Animation animation5 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apha_animation_enable_type_a);
+                Animation animation6 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apla_animation_disable_type_a);
+
+                workPageBinding.buttonEndWord.startAnimation(animation6);
+                workPageBinding.buttonStarWord.startAnimation(animation6);
+
                 workPageBinding.lottieScanEnd.setVisibility(View.VISIBLE);
                 workPageBinding.lottieScanEnd.startAnimation(animation2);
+                disableButtonStartEnd();
 
                 countDownTimerEnd = new CountDownTimer(10500,1000) {
                     @Override
@@ -213,21 +246,38 @@ public class WorkPage extends AppCompatActivity {
                     @Override
                     public void onFinish() {
                         if (flgBeaconWkPage){
-                            Toast.makeText(WorkPage.this," Check Success ",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(WorkPage.this," End Check Success ",Toast.LENGTH_SHORT).show();
                             processedTimeNowEnd();
                             setTXTEnd();
 
                         }else{
-                            Toast.makeText(WorkPage.this," Check Fail ",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(WorkPage.this," End Check Fail ",Toast.LENGTH_SHORT).show();
                         }
+                        workPageBinding.buttonStarWord.startAnimation(animation5);
+                        workPageBinding.buttonEndWord.startAnimation(animation5);
+
                         workPageBinding.lottieScanEnd.startAnimation(animation3);
                         workPageBinding.lottieScanEnd.setVisibility(View.GONE);
+                        enableButtonStartEnd();
 
                     }
                 };countDownTimerEnd.start();
 
             }
         });
+    }
+
+    private void enableButtonStartEnd(){
+
+        workPageBinding.buttonStarWord.setEnabled(true);
+        workPageBinding.buttonEndWord.setEnabled(true);
+
+    }
+
+    private void disableButtonStartEnd(){
+
+        workPageBinding.buttonStarWord.setEnabled(false);
+        workPageBinding.buttonEndWord.setEnabled(false);
 
     }
     ////////////////////////////////////
@@ -252,7 +302,7 @@ public class WorkPage extends AppCompatActivity {
         }
 
     }
-
+    ////////////////////////////////////
 
     ////////////////////////////////////
     private void TagcastAA(){
