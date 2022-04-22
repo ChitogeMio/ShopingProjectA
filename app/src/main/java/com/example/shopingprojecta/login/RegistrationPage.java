@@ -15,12 +15,15 @@ import com.example.shopingprojecta.R;
 import com.example.shopingprojecta.databinding.ActivityRegistrationPageBinding;
 import com.example.shopingprojecta.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegistrationPage extends AppCompatActivity {
 
@@ -28,8 +31,10 @@ public class RegistrationPage extends AppCompatActivity {
 
     //ActivityRegistrationPageBinding registrationPageBinding;
     ActivityRegistrationPageBinding registrationPageBinding;
-    FirebaseAuth myAuthencation;
-    DatabaseReference registrationDatabase;
+    private FirebaseAuth myAuthencation;
+    private DatabaseReference registrationDatabase;
+    private FirebaseFirestore firebaseFirestoreRsPage;
+    private FirebaseUser userID;
 
     private User user = new User();
 
@@ -89,8 +94,7 @@ public class RegistrationPage extends AppCompatActivity {
 
     ////// update du lieu len firebase data////
     private void updateDatabaseUser(){
-
-        FirebaseUser userID = FirebaseAuth.getInstance().getCurrentUser();
+        userID = FirebaseAuth.getInstance().getCurrentUser();
         if (userID != null) {
             // Name, email address, and profile photo Url
             user.setNameEmail(userID.getEmail());
@@ -100,9 +104,32 @@ public class RegistrationPage extends AppCompatActivity {
             // FirebaseUser.getIdToken() instead.
             user.setUidEmail(userID.getUid());
         }
-        registrationDatabase.child("UserInfomation").push().setValue(user);
+        FirebaseStrUpdate();
+        //registrationDatabase.child("UserInfomation").push().setValue(user);// ham xu ly update infomation add database
+    }
+
+    ////////////Firebase hangding//////////
+
+    private void FirebaseStrUpdate(){
+
+        firebaseFirestoreRsPage = FirebaseFirestore.getInstance();
+        firebaseFirestoreRsPage.collection(userID.getEmail())
+                .document("Infomation")
+                .set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                /////////// chua lam j ca //////////
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                /////////// chua lam j ca //////////
+            }
+        });
 
     }
+
+    ///////////////////////////////////////
     //// kiem tra da du thong tin chua ////
     private void checkedbox(){
 

@@ -6,10 +6,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.SoundPool;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,19 +19,21 @@ import android.widget.Toast;
 
 import com.example.shopingprojecta.R;
 import com.example.shopingprojecta.databinding.ActivityWorkPageBinding;
+import com.example.shopingprojecta.models.WorkerUser;
 import com.example.shopingprojecta.tagcast.AppInfo;
 import com.example.shopingprojecta.tagcast.ErrorDialogFragment;
 import com.example.shopingprojecta.tagcast.ErrorDialogWorkPage;
-import com.example.shopingprojecta.view.CheckinPage;
-import com.example.shopingprojecta.view.MainActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -54,10 +54,13 @@ public class WorkPage extends AppCompatActivity {
     public TGCAdapter tgcAdapterWkPage;
     private boolean flgBeaconWkPage = false;
     public int mErrorDialogType = ErrorDialogFragment.TYPE_NO;
-    ////////////////////////////////////
+
+    private WorkerUser workerUser;
 
     //////////////FireBase///////////////
     FirebaseAuth firebaseAuthWorkPage;
+    DatabaseReference workPageDatabase;
+    FirebaseFirestore firebaseFirestoreWorKPage;
     private FirebaseUser userID;
     // Id of the provider (ex: google.com)
     private String providerId;
@@ -87,7 +90,8 @@ public class WorkPage extends AppCompatActivity {
     private int soundIdSignal;
     private String TCentityNumber, TCid, longmap,latmap, serial;
     private Map<String,String> map;
-
+    ////////////////////////////
+    private int btnUpdate = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,25 +100,53 @@ public class WorkPage extends AppCompatActivity {
         setContentView(workPageBinding.getRoot());
         //setContentView(R.layout.activity_work_page);
 
+        workerUser = new WorkerUser();
+
         final Context context = getApplicationContext();
         tgcAdapterWkPage=TGCAdapter.getInstance(context);
 
+        xlybd();
         TagcastAA();
         pressButton();
 
 
     }
-
     ////////////////////////////////////
       ///      person program     ///
     ////////////////////////////////////
 
-    /////////time handling/////////////
+    /***** Firebase handling *****/
+
+    private void FirebaseDatabaseCloud(){
+
+        firebaseFirestoreWorKPage = FirebaseFirestore.getInstance();
+
+        firebaseFirestoreWorKPage.collection(userID.getEmail())
+                .document("Work").collection(workerUser.getDayWork())
+                .document("WorkTime")
+                .set(workerUser)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+    }
+
+    /***** time handling *****/
+
     private void processedTimeNow (){
 
         calendar = Calendar.getInstance();
         simpleDateFormatTime = new SimpleDateFormat("HH:mm:ss");
-        simpleDateFormatDate = new SimpleDateFormat("dd/MMM/yyyy");
+        simpleDateFormatDate = new SimpleDateFormat("dd-MMM-yyyy");
         dateFormatStar = simpleDateFormatTime;
         days = dateFormatStar.getCalendar().getTime(); // time
         Time = simpleDateFormatTime.format(calendar.getTime());
@@ -125,33 +157,36 @@ public class WorkPage extends AppCompatActivity {
 
         calendarEnd = Calendar.getInstance();
         simpleDateFormatTime1 = new SimpleDateFormat("HH:mm:ss");
-        simpleDateFormatDate1 = new SimpleDateFormat("dd/MMM/yyyy");
+        simpleDateFormatDate1 = new SimpleDateFormat("dd-MMM-yyyy");
         dateFormatEnd = simpleDateFormatTime1;
         daye = dateFormatEnd.getCalendar().getTime();
         long dift = daye.getTime() - days.getTime();
-        //workPageBinding.txtTimeWork.setText(String.valueOf(dift));
         long hours = TimeUnit.MILLISECONDS.toHours(dift);
         long minutes = TimeUnit.MILLISECONDS.toMinutes(dift) % 60;
         long seconds = TimeUnit.MILLISECONDS.toSeconds(dift) % 60;
         long milliseconds = dift % 1000;
         TimeE = String.format("%02d:%02d:%02d,%02d", hours, minutes, seconds, milliseconds);
     }
-    ////////////////////////////////////
 
-    ////////////SetText handling////////
+    /***** SetText handling *****/
+
     private void setTXTStart(){
 
         workPageBinding.txtNameUser.setText(emaill);
         workPageBinding.txtTimeStarWork.setText(Time);
         workPageBinding.txtDayWork.setText(date);
+        workerUser.setNameWorker(emaill);
+        workerUser.setDayWork(date);
+        workerUser.setTimeStarWork(Time);
 
     }
+
     private void setTXTEnd(){
         workPageBinding.txtTimeWork.setText(TimeE);
     }
-    ////////////////////////////////////
 
-    //////////pressButton handling//////
+    /***** pressButton handling *****/
+
     private void pressButton(){
 
         pressButtonStart();
@@ -172,12 +207,6 @@ public class WorkPage extends AppCompatActivity {
                 Animation animation = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apha_animation_a);
                 Animation animation1 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apha_animation_b);
 
-                Animation animation5 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apha_animation_enable_type_a);
-                Animation animation6 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apla_animation_disable_type_a);
-
-                workPageBinding.SSSSSSStarCart.startAnimation(animation6);
-                workPageBinding.SSSSSSStarCart.startAnimation(animation6);
-
                 workPageBinding.lottieScanStar.setVisibility(View.VISIBLE);
                 workPageBinding.lottieScanStar.startAnimation(animation);
                 disableButtonStartEnd();
@@ -195,13 +224,12 @@ public class WorkPage extends AppCompatActivity {
                             getUserLogin();
                             processedTimeNow();
                             setTXTStart();
+                            FirebaseDatabaseCloud();
 
                         }else{
                             Toast.makeText(WorkPage.this," Start Check Fail",Toast.LENGTH_SHORT).show();
                         }
 
-                        workPageBinding.SSSSSSStarCart.startAnimation(animation5);
-                        workPageBinding.EEEEEECart.startAnimation(animation5);
                         workPageBinding.lottieScanStar.startAnimation(animation1);
                         workPageBinding.lottieScanStar.setVisibility(View.GONE);
                         enableButtonStartEnd();
@@ -226,13 +254,6 @@ public class WorkPage extends AppCompatActivity {
                 Animation animation2 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apha_animation_a);
                 Animation animation3 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apha_animation_b);
 
-
-                Animation animation5 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apha_animation_enable_type_a);
-                Animation animation6 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apla_animation_disable_type_a);
-
-                workPageBinding.buttonEndWord.startAnimation(animation6);
-                workPageBinding.buttonStarWord.startAnimation(animation6);
-
                 workPageBinding.lottieScanEnd.setVisibility(View.VISIBLE);
                 workPageBinding.lottieScanEnd.startAnimation(animation2);
                 disableButtonStartEnd();
@@ -248,13 +269,12 @@ public class WorkPage extends AppCompatActivity {
                         if (flgBeaconWkPage){
                             Toast.makeText(WorkPage.this," End Check Success ",Toast.LENGTH_SHORT).show();
                             processedTimeNowEnd();
+                            FirebaseDatabaseCloud();
                             setTXTEnd();
 
                         }else{
                             Toast.makeText(WorkPage.this," End Check Fail ",Toast.LENGTH_SHORT).show();
                         }
-                        workPageBinding.buttonStarWord.startAnimation(animation5);
-                        workPageBinding.buttonEndWord.startAnimation(animation5);
 
                         workPageBinding.lottieScanEnd.startAnimation(animation3);
                         workPageBinding.lottieScanEnd.setVisibility(View.GONE);
@@ -267,7 +287,34 @@ public class WorkPage extends AppCompatActivity {
         });
     }
 
+    private void xlybd(){
+
+        if(btnUpdate==0){
+
+            workPageBinding.buttonStarWord.setEnabled(false);
+            workPageBinding.buttonEndWord.setEnabled(false);
+
+        }else {}
+    }
+
+    private void pressButtonUpdate(){
+
+        workPageBinding.buttonUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                btnUpdate = 1;
+
+
+            }
+        });
+
+    }
+
     private void enableButtonStartEnd(){
+        Animation animation5 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apha_animation_enable_type_a);
+        workPageBinding.SSSSSSStarCart.startAnimation(animation5);
+        workPageBinding.EEEEEECart.startAnimation(animation5);
 
         workPageBinding.buttonStarWord.setEnabled(true);
         workPageBinding.buttonEndWord.setEnabled(true);
@@ -276,11 +323,17 @@ public class WorkPage extends AppCompatActivity {
 
     private void disableButtonStartEnd(){
 
+        Animation animation6 = AnimationUtils.loadAnimation(WorkPage.this,R.anim.apla_animation_disable_type_a);
+        workPageBinding.SSSSSSStarCart.startAnimation(animation6);
+        workPageBinding.EEEEEECart.startAnimation(animation6);
+
         workPageBinding.buttonStarWord.setEnabled(false);
         workPageBinding.buttonEndWord.setEnabled(false);
 
     }
-    ////////////////////////////////////
+
+    /**sdfsdfdsd'
+     */
 
     /////////getUserLogin handling//////
     private  void getUserLogin(){
@@ -568,5 +621,5 @@ public class WorkPage extends AppCompatActivity {
             return null;
         }
     }
-
+    //////////////////////////////////////////////
 }
