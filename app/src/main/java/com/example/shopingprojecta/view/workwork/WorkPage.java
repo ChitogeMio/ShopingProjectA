@@ -106,6 +106,7 @@ public class WorkPage extends AppCompatActivity {
         tgcAdapterWkPage=TGCAdapter.getInstance(context);
 
         xlybd();
+        pressButtonUpdate();
         TagcastAA();
         pressButton();
 
@@ -304,6 +305,9 @@ public class WorkPage extends AppCompatActivity {
             public void onClick(View view) {
 
                 btnUpdate = 1;
+                workPageBinding.buttonStarWord.setEnabled(true);
+                workPageBinding.buttonEndWord.setEnabled(true);
+
 
 
             }
