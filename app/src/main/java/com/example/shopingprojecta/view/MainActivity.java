@@ -53,9 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onChanged:"+cartItems.size());
                 int quantily=0;
                 for (CartItem cartItem:cartItems){
-
                     quantily+=cartItem.getQuantity();
-
                 }
                 cartQuantily = quantily;
                 invalidateOptionsMenu();
@@ -87,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onOptionsItemSelected(menuItem);
-
             }
         });
 

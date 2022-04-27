@@ -97,6 +97,7 @@ public class LoginPage extends AppCompatActivity {
         FirebaseUser userID = FirebaseAuth.getInstance().getCurrentUser();
 
         if (userID != null) {
+            String emaail = userID.getEmail();
             for (UserInfo profile : userID.getProviderData()) {
                 // Id of the provider (ex: google.com)
                 String providerId = profile.getProviderId();

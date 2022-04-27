@@ -63,7 +63,6 @@ public class CartFragment extends Fragment implements CartListAdapter.CartInterf
             public void onChanged(List<CartItem> cartItems) {
 
                 cartListAdapter.submitList(cartItems);
-
                 fragmentCartBinding.buttonBuy.setEnabled(cartItems.size()>0);
 
             }

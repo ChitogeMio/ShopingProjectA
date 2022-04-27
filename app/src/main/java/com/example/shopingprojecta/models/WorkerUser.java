@@ -6,16 +6,18 @@ public class WorkerUser {
     private String dayWork;
     private String timeStarWork;
     private String timeWork;
+    private String totalTime;
 
     public WorkerUser() {
         // mac dinh cua firebaseData (neu khong co se cosloi tai du lieu ve)
     }
 
-    public WorkerUser(String nameWorker, String dayWork, String timeStarWork, String timeWork) {
+    public WorkerUser(String nameWorker, String dayWork, String timeStarWork, String timeWork, String totalTime) {
         this.nameWorker = nameWorker;
         this.dayWork = dayWork;
         this.timeStarWork = timeStarWork;
         this.timeWork = timeWork;
+        this.totalTime = totalTime;
     }
 
     public String getNameWorker() {
@@ -50,6 +52,14 @@ public class WorkerUser {
         this.timeWork = timeWork;
     }
 
+    public String getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(String totalTime) {
+        this.totalTime = totalTime;
+    }
+
     @Override
     public String toString() {
         return "WorkerUser{" +
@@ -57,6 +67,7 @@ public class WorkerUser {
                 ", dayWork='" + dayWork + '\'' +
                 ", timeStarWork='" + timeStarWork + '\'' +
                 ", timeWork='" + timeWork + '\'' +
+                ", totalTime='" + totalTime + '\'' +
                 '}';
     }
 }

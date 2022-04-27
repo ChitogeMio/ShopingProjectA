@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.shopingprojecta.R;
 import com.example.shopingprojecta.databinding.ActivityRegistrationPageBinding;
 import com.example.shopingprojecta.models.User;
+import com.example.shopingprojecta.models.WorkerUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -111,6 +112,8 @@ public class RegistrationPage extends AppCompatActivity {
     ////////////Firebase hangding//////////
 
     private void FirebaseStrUpdate(){
+
+        WorkerUser workerUser = new WorkerUser();
 
         firebaseFirestoreRsPage = FirebaseFirestore.getInstance();
         firebaseFirestoreRsPage.collection(userID.getEmail())
