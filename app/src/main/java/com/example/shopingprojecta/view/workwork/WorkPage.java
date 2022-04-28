@@ -128,8 +128,6 @@ public class WorkPage extends AppCompatActivity {
         getUIandDay();
         xlybd();
         readFirebaseDatabase();
-
-        //pressButtonUpdate();
         TagcastAA();
         pressButton();
 
@@ -140,6 +138,7 @@ public class WorkPage extends AppCompatActivity {
     ***********************************/
 
     /***** Firebase handling *****/
+
 
     private void FirebaseDatabaseCloudStart(){
 
@@ -352,6 +351,7 @@ public class WorkPage extends AppCompatActivity {
 
         pressButtonStart();
         pressButtonEnd();
+        pressButtonInfor();
 
     }
 
@@ -469,9 +469,17 @@ public class WorkPage extends AppCompatActivity {
 
     }
 
-    private void pressButtonUpdate(){
+    private void pressButtonInfor(){
 
+        workPageBinding.buttonInfor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Intent intent = new Intent(WorkPage.this,WorkDataActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
     }
 

@@ -50,8 +50,6 @@ public class CartItem {
         return getQuantity() == cartItem.getQuantity() && getProduct().equals(cartItem.getProduct());
     }
 
-
-
     @BindingAdapter("android:setVal")
     public static void getSellectedSppinerValue(Spinner spinner, int quantity){
 

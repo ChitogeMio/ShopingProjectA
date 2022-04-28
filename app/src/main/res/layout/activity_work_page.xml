@@ -369,10 +369,10 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textViewUpdate"
+                                android:id="@+id/textViewInfor"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Update"
+                                android:text="Infor"
                                 android:gravity="center"
                                 android:textSize="20dp"/>
                             <androidx.cardview.widget.CardView
@@ -381,7 +381,7 @@
                                 android:layout_height="70dp">
 
                                 <com.airbnb.lottie.LottieAnimationView
-                                    android:id="@+id/buttonUpdate"
+                                    android:id="@+id/buttonInfor"
                                     android:layout_width="match_parent"
                                     android:layout_height="67dp"
                                     android:scaleType="centerCrop"

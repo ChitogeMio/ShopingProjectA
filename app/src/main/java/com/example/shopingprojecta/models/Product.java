@@ -26,14 +26,6 @@ public class Product {
         this.image_url_a = image_url_a;
     }
 
-    //    public Product(String id_a, String name_a, Double price_a, boolean isAvailable_a, String image_url_a) {
-//        this.id_a = id_a;
-//        this.name_a = name_a;
-//        this.price_a = price_a;
-//        this.isAvailable_a = isAvailable_a;
-//        this.image_url_a;
-//    }
-
     public String getId_a() {
         return id_a;
     }
